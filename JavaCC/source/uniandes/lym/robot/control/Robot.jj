@@ -38,10 +38,15 @@ public class Robot
 
 
 	private RobotWorldDec world;
+	private HashMap<String, Integer > variables ;
+	private HashMap<String, Integer > funciones;
+
 	
 	
 	void setWorld(RobotWorld w) {
-		world = (RobotWorldDec) w;	
+		world = (RobotWorldDec) w;
+		funciones = new HashMap();
+		variables= new HashMap();	
 	}
 
 	String salida=new String();
@@ -65,6 +70,14 @@ TOKEN: /* Nombres de Comandos */
 		| 	<PICK: "Pick">
 		|  < POP: "Pop" >
 		|  <GO: "GO" >
+		| < VEER : "veer">
+		| < INICORCH : "(" >
+		| < ENDCORCH : ")" >
+		| < NORTH : "North" >
+		| < EAST : "East" >
+		| < WEST : "West" >
+		| <LOOK: "look">
+		| < SOUTH : "South" >
         |  < HOP:  "HOP" >		
 
 }
@@ -91,13 +104,16 @@ TOKEN :
 	boolean command(Console sistema):
 	{	
 		
-		int x,y;
-		salida=new String();	
+		int x;
+		salida=new String();
+		String temp;	
 	}
 
 	
 	{
-		(		  (
+		(
+		  (
+		
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
 		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
@@ -105,7 +121,7 @@ TOKEN :
 		|  <PUT> "("  put() ")"					  			
 		|  <PICK> "(" get()  ")"	
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
-		) ";" 
+		| 	< INICORCH >{ temp =token.image; }  	look() 			 < ENDCORCH >{ temp =token.image; }   { sistema.append(temp);}		) ";" 
 
 		{
 		    try {
@@ -140,7 +156,40 @@ TOKEN :
 		|  	  ( <BALLOONS>   "," f=num() {world.grabBalloons(f);salida="Command:  Pick balloons";})	 
 
 	}
-
+	
+String look() :
+{ String retorno;
+	String coorde; }
+	{
+	  < T_LOOK > (LOOKAHEAD() < NORTH >| LOOKAHEAD() < SOUTH > | LOOKAHEAD() < WEST > | LOOKAHEAD() < EAST >) {coorde= token.image; } {
+	    switch(coorde) {
+	   	 case "North" :
+	     	 while (!world.facingNorth()) { 
+	     	 world.turnRight(); }
+	         break;
+	      	
+	     case "South" :
+	      	while (!world.facingSouth()) { 
+	      	world.turnRight(); }
+	      	break;
+	      		         
+	     case "East" :
+	     	while (!world.facingEast()) { 
+	     	world.turnRight(); }
+	      	break;
+	      	
+	     case "West" : 
+	      	while (!world.facingWest()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	 }
+	 retornar = "comando look";
+	 return retorno;
+	}
+	
+	
+}
 	
 	
 
