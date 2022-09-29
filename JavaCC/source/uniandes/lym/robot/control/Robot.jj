@@ -87,8 +87,11 @@ TOKEN: /* Nombres de Comandos */
         | < DROP: "Drop" >
         | < GRAB: "Grab" >
         | < GET: "Get" >
-        | < FREE: "Free" >	
-
+        | < FREE: "Free" >
+        | < ISFACING : "Isfacing" >
+        | < ISVALID : "Isvalid" >
+        | < CANMOVE : "Canmove" >
+        | < NOT : "Not" >
 }
 
 TOKEN:
