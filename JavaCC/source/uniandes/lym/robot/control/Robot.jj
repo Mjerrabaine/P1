@@ -204,6 +204,7 @@ TOKEN :
 	    )
 	    < ENDCORCH  >
 	}
+
 */
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
@@ -255,6 +256,19 @@ TOKEN :
 		|  	  ( <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
 		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})	 
 
+	}
+
+	void veer() :
+	{
+	  String d;
+	}
+
+	{ (
+	( < VAR > d=var()
+	)
+
+	< VEER > // {dir=token.image; world.veer(d); salida = "Command: Veer in direction d";}
+	
 	}
 
 	void Dmove() :
