@@ -66,20 +66,20 @@ SKIP:
 TOKEN: /* Nombres de Comandos */
 {
 
-		< MOV:  "Mov" >
-		| < RIGHT: "RIGHT" >
-		| < PUT: "Put">
-		| < PICK: "Pick">
-		| < POP: "Pop" >
-		| < GO: "GO" >
-		| < VEER : "Veer" >
-		| < INICORCH : "(" >
-		| < ENDCORCH : ")" >
-		| < NORTH : "North" >
-		| < EAST : "East" >
-		| < WEST : "West" >
-		| < LOOK: "Look" >
-		| < SOUTH : "South" >
+	< MOV:  "Mov" >
+	| < RIGHT: "RIGHT" >
+	| < PUT: "Put">
+	| < PICK: "Pick">
+	| < POP: "Pop" >
+	| < GO: "GO" >
+	| < VEER : "Veer" >
+	| < INICORCH : "(" >
+	| < ENDCORCH : ")" >
+	| < NORTH : "North" >
+	| < EAST : "East" >
+	| < WEST : "West" >
+	| < LOOK: "Look" >
+	| < SOUTH : "South" >
         | < HOP:  "HOP" >
         | < STEP: "Step" >
         | < JUMP: "Jump" >
