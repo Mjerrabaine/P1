@@ -86,7 +86,8 @@ TOKEN: /* Nombres de Comandos */
         | < JUMPTO: "JumpTo" >
         | < DROP: "Drop" >
         | < GRAB: "Grab" >
-        | < GET: "Get" >	
+        | < GET: "Get" >
+        | < FREE: "Free" >	
 
 }
 
