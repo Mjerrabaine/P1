@@ -66,21 +66,27 @@ SKIP:
 TOKEN: /* Nombres de Comandos */
 {
 
-			<MOV:  "Mov">
-		| 	<RIGHT: "RIGHT">
-		| 	<PUT: "Put">
-		| 	<PICK: "Pick">
-		|  < POP: "Pop" >
-		|  <GO: "GO" >
-		| < VEER : "veer">
+		< MOV:  "Mov" >
+		| < RIGHT: "RIGHT" >
+		| < PUT: "Put">
+		| < PICK: "Pick">
+		| < POP: "Pop" >
+		| < GO: "GO" >
+		| < VEER : "Veer" >
 		| < INICORCH : "(" >
 		| < ENDCORCH : ")" >
 		| < NORTH : "North" >
 		| < EAST : "East" >
 		| < WEST : "West" >
-		| <LOOK: "look">
+		| < LOOK: "Look" >
 		| < SOUTH : "South" >
-        |  < HOP:  "HOP" >		
+        | < HOP:  "HOP" >
+        | < STEP: "Step" >
+        | < JUMP: "Jump" >
+        | < JUMPTO: "JumpTo" >
+        | < DROP: "Drop" >
+        | < GRAB: "Grab" >
+        | < GET: "Get" >	
 
 }
 
@@ -92,7 +98,6 @@ TOKEN:
 }
 
 
-
 TOKEN :
 {
 		<NUM: (<DIGIT>)+ >
@@ -100,7 +105,11 @@ TOKEN :
         
 }
 
+TOKEN :
+}
+		
 
+}
 
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
