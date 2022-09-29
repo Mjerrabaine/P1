@@ -105,7 +105,7 @@ TOKEN :
 		| < #DIGIT: ["0"-"9"] >
 		| < #UPPER : [ "A"-"Z" ] >
 		| < #LOWER : [ "a"-"z" ] >
-		| < VAR :  ( <UPPER> | <LOWER> ( <UPPER > | <LOWER> | <DIGIT> )* )>
+		| < VAR :  ( <UPPER> | <LOWER> ( <UPPER > | <LOWER> | <DIGIT> )* ) >
         
 }
 
