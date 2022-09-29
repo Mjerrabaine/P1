@@ -101,15 +101,11 @@ TOKEN:
 
 TOKEN :
 {
-		<NUM: (<DIGIT>)+ >
-		|  	<#DIGIT: ["0"-"9"] >
+		< NUM: (<DIGIT>)+ >
+		| <#DIGIT: ["0"-"9"] >
+		| < #LETTER : [ "A"-"Z" ] >
+		| < VAR :  <LETTER > (< LETTER >| < DIGIT >)* >
         
-}
-
-TOKEN :
-}
-		
-
 }
 
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
