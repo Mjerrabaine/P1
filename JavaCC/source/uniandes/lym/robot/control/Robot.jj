@@ -80,23 +80,23 @@ TOKEN: /* Nombres de Comandos */
 	| < WEST : "West" >
 	| < LOOK: "Look" >
 	| < SOUTH : "South" >
-        | < HOP:  "HOP" >
-        | < STEP: "Step" >
-        | < JUMP: "Jump" >
-        | < JUMPTO: "JumpTo" >
-        | < DROP: "Drop" >
-        | < GRAB: "Grab" >
-        | < GET: "Get" >
-        | < FREE: "Free" >
-        | < ISFACING : "Isfacing" >
-        | < ISVALID : "Isvalid" >
-        | < CANMOVE : "Canmove" >
-        | < NOT : "Not" >
-        |< If: "If" >
-        |< ELSE : "Else">
-        |< FI: "Fi" >
-        |< REPEATTIMES: "Repeattimes" >
-        |< PER: "Per" >
+    | < HOP:  "HOP" >
+    | < STEP: "Step" >
+    | < JUMP: "Jump" >
+    | < JUMPTO: "JumpTo" >
+    | < DROP: "Drop" >
+    | < GRAB: "Grab" >
+    | < GET: "Get" >
+    | < FREE: "Free" >
+    | < ISFACING : "Isfacing" >
+    | < ISVALID : "Isvalid" >
+    | < CANMOVE : "Canmove" >
+    | < NOT : "Not" >
+    |< If: "If" >
+    |< ELSE : "Else">
+    |< FI: "Fi" >
+    |< REPEATTIMES: "Repeattimes" >
+    |< PER: "Per" >
 }
 
 TOKEN:
