@@ -102,9 +102,10 @@ TOKEN:
 TOKEN :
 {
 		< NUM: (<DIGIT>)+ >
-		| <#DIGIT: ["0"-"9"] >
-		| < #LETTER : [ "A"-"Z" ] >
-		| < VAR :  <LETTER > (< LETTER >| < DIGIT >)* >
+		| < #DIGIT: ["0"-"9"] >
+		| < #UPPER : [ "A"-"Z" ] >
+		| < #LOWER : [ "a"-"z" ] >
+		| < VAR :  ( <UPPER> | <LOWER> ( <UPPER > | <LOWER> | <DIGIT> )* )>
         
 }
 
