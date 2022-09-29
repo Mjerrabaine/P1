@@ -109,28 +109,88 @@ TOKEN :
         
 }
 
+/*
+
+	void block() :
+	{
+			
+	}
+	{
+	     (inst(),)* inst()
+	}
+	
+	void inst() :
+	{
+			
+	}
+	{
+	     Controlstructure()
+    	| command()
+	}
+
+		void Controlstructure() :
+	{
+			
+	}
+	{
+	    condicional()
+	    | loop()
+	    | repeat()
+	}
+
+		void conditional() :
+	{
+			
+	}
+	{
+	    condicionalif()
+	    | condicionalelse()
+	}
+
+		void condicionalelse() :
+	{
+			
+	}
+	{
+        < If > condition() blockI()
+	    | condicionalelse()
+	}
+	
+
+		void condition() :
+	{
+			
+	}
+	{
+		<IFACING>  "(" IsFacing()")"
+		| 	<ISVALID>  "(" isvalid() ")"}
+		| 	<CANMOVE>  "(" CanMove() ")"}
+		| 	<NOT>  "(" Not() ")"}   
+	}
+*/
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
 	{	
 		
-		int x;
-		salida=new String();
-		String temp;	
+		int x,y;
+		salida=new String();	
 	}
 
 	
 	{
 		(
 		  (
-		
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
 		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
-		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}  
+		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}
+		//| 	<STEP>  "(" step()")"
+		//		| 	<DMOVE>  "(" Dmove() ")"}
+		//		| 	<OMOVE>  "(" Omove() ")"}       
 		|  <PUT> "("  put() ")"					  			
 		|  <PICK> "(" get()  ")"	
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
-		| 	< INICORCH >{ temp =token.image; }  	look() 			 < ENDCORCH >{ temp =token.image; }   { sistema.append(temp);}		) ";" 
+		) ";" 
 
 		{
 		    try {
@@ -146,6 +206,66 @@ TOKEN :
     	| <EOF> {return false;} 
 	}
 
+/*
+	void step() :
+	{
+		int f=1;
+		v=var();
+		p=param();	
+	}
+	{
+		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		|  	  ( <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
+		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})	 
+
+	}
+
+	void Dmove() :
+	{
+	  String v, p;
+	  Int f;
+	}
+	{
+	  
+		(
+		  ( <VAR>     v=var()}
+		|  	  ( <PARAM>   p=param()
+		|  	  ( <NUM>   f=num()
+)
+		","
+		(<Front>  //{dir=token.image; world.moveForward(x,false); salida = "Command:  Step foward n";}
+		|<BACK>) //{dir=token.image;  world.moveForward() ;}
+		
+	  	 
+
+	}
+	
+	void Omove() :
+	{
+	  String d;
+	   String p;
+	   
+	}
+	{
+		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		|  	  ( <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
+		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
+
+
+
+		
+	  	< T_ROTATE > ("north"|"south"|"east"|"west") {d= token.image ;} {
+	    if (d.equalsIgnoreCase("North")) { world.turnRight();world.turnRight();world.turnRight(); }
+	    else if (d.equalsIgnoreCase("back")) { world.turnRight();world.turnRight(); }
+	    else if (d.equalsIgnoreCase("right")) { world.turnRight(); }
+	    retornar= "comando Omove";
+  }
+  {
+    return retornar; }	 
+
+	}
+	
+*/	
 	void put() :
 	{
 		int f=1;	
@@ -165,40 +285,7 @@ TOKEN :
 		|  	  ( <BALLOONS>   "," f=num() {world.grabBalloons(f);salida="Command:  Pick balloons";})	 
 
 	}
-	
-String look() :
-{ String retorno;
-	String coorde; }
-	{
-	  < T_LOOK > (LOOKAHEAD() < NORTH >| LOOKAHEAD() < SOUTH > | LOOKAHEAD() < WEST > | LOOKAHEAD() < EAST >) {coorde= token.image; } {
-	    switch(coorde) {
-	   	 case "North" :
-	     	 while (!world.facingNorth()) { 
-	     	 world.turnRight(); }
-	         break;
-	      	
-	     case "South" :
-	      	while (!world.facingSouth()) { 
-	      	world.turnRight(); }
-	      	break;
-	      		         
-	     case "East" :
-	     	while (!world.facingEast()) { 
-	     	world.turnRight(); }
-	      	break;
-	      	
-	     case "West" : 
-	      	while (!world.facingWest()) { 
-	      	world.turnRight(); }
-	      	break;
-	      	
-	 }
-	 retornar = "comando look";
-	 return retorno;
-	}
-	
-	
-}
+
 	
 	
 
@@ -226,5 +313,4 @@ String look() :
 			return total;
 		}
 	}
-
 	
