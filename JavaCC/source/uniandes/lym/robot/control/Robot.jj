@@ -92,6 +92,9 @@ TOKEN: /* Nombres de Comandos */
         | < ISVALID : "Isvalid" >
         | < CANMOVE : "Canmove" >
         | < NOT : "Not" >
+        |< If: "If" >
+        |< ELSE : "Else">
+        |< FI: "Fi" >
 }
 
 TOKEN:
