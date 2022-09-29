@@ -116,7 +116,7 @@ TOKEN :
 			
 	}
 	{
-	     (inst(),)* inst()
+	     (inst(),)+ inst()
 	}
 	
 	void inst() :
@@ -124,11 +124,12 @@ TOKEN :
 			
 	}
 	{
-	     Controlstructure()
-    	| command()
+	    Controlstructure()
+    	| Command()
 	}
+	
 
-		void Controlstructure() :
+		boolean Controlstructure() :
 	{
 			
 	}
@@ -136,6 +137,20 @@ TOKEN :
 	    condicional()
 	    | loop()
 	    | repeat()
+		) ";" 
+		//Se tiene que poner?
+		{
+		    try {
+	    			 Thread.sleep(900);
+	    	    } catch (InterruptedException e) {
+	    			        System.err.format("IOException: %s%n", e);
+	    		    }
+	    			 
+			sistema.printOutput(salida);
+			return true;
+		})+
+
+    	| <EOF> {return false;} 
 	}
 
 		void conditional() :
@@ -147,13 +162,22 @@ TOKEN :
 	    | condicionalelse()
 	}
 
+			void condicionalif() :
+	{
+			
+	}
+	{
+        < If > conditiones() block() < ELSE > block() < FI >
+	}
+
+
 		void condicionalelse() :
 	{
 			
 	}
 	{
         < If > condition() blockI()
-	    | condicionalelse()
+
 	}
 	
 
@@ -162,10 +186,15 @@ TOKEN :
 			
 	}
 	{
-		<IFACING>  "(" IsFacing()")"
-		| 	<ISVALID>  "(" isvalid() ")"}
-		| 	<CANMOVE>  "(" CanMove() ")"}
-		| 	<NOT>  "(" Not() ")"}   
+	    < INICORCH >
+	    (
+	    < ISFACING > (< NORTH >|< WEST >|< EAST >|< SOUTH >)
+	    //falta variable
+	    | < ISVALID > (< GRAB >|< STEP >|< JUMP >|< FREE >|< PICK >|< DROP >) ","  
+	    | < CANMOVE > (< NORTH >|< WEST >|< EAST >|< SOUTH >) ","
+	    | < T_NOT > condition()
+	    )
+	    < ENDCORCH  >
 	}
 */
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
