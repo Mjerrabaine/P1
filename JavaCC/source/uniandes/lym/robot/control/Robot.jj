@@ -95,6 +95,8 @@ TOKEN: /* Nombres de Comandos */
         |< If: "If" >
         |< ELSE : "Else">
         |< FI: "Fi" >
+        |< REPEATTIMES: "Repeattimes" >
+        |< PER: "Per" >
 }
 
 TOKEN:
