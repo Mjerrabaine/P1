@@ -313,6 +313,16 @@ TOKEN :
 
 	}
 
+	void jump() :
+	{
+	  Int n;
+	}
+	{
+	(
+	<NUM>   n=num() {world.moveForward(n,false); salida = "Command:  Step foward n";})
+	)
+}
+
 	void look() :
 	{
 	  //tocaria definir 6 variables?
@@ -432,9 +442,6 @@ TOKEN :
 	  	 
 
 	}
-
-
-
 
 	void veer() :
 	{
