@@ -315,11 +315,15 @@ TOKEN :
 
 	void jump() :
 	{
+	  String v, p;
 	  Int n;
 	}
 	{
 	(
-	<NUM>   n=num() {world.moveForward(n,false); salida = "Command:  Step foward n";})
+		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
+		|  	   <NUM>   n=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
+		)
 	)
 }
 
