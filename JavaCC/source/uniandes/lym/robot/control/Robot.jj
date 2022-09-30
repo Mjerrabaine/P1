@@ -248,7 +248,13 @@ TOKEN :
 		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}
 		//		| 	<STEP>  "(" step()")"}
 		//		| 	<DMOVE>  "(" Dmove() ")"}
-		//		| 	<OMOVE>  "(" Omove() ")"}   
+		//		| 	<OMOVE>  "(" Omove() ")"}
+		//		| 	<JUMPTO>  "(" jumpto() ")"}
+		//		| 	<LOOK>  "(" look() ")"}
+		//		| 	<GRAB>  "(" grab() ")"}
+		//		| 	<FREE>  "(" free() ")"}
+		//		| 	<ISVALID>  "(" isvalid() ")"} 
+		//		| 	<CANMOVE>  "(" canmove() ")"}  
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
