@@ -295,6 +295,19 @@ TOKEN :
 	
 	}
 
+	void isFacing() :
+	{
+	  String d;
+	}
+
+	{ (
+	( < VAR > d=var()
+	)
+
+	< ISFACING > // {dir=token.image; world.isFacing(d); salida = "Command: Facing direction d";}
+	
+	}
+
 	void Dmove() :
 	{
 	  String v, p;
