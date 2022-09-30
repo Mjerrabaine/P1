@@ -117,6 +117,8 @@ TOKEN :
 		| < #UPPER : [ "A"-"Z" ] >
 		| < #LOWER : [ "a"-"z" ] >
 		| < VAR :  ( <UPPER> | <LOWER> ( <UPPER > | <LOWER> | <DIGIT> )* ) >
+		| 	< WORD: (< LETTER >)+ >
+		| 	< #LETTER: ["a"-"z"] >
         
 }
 
