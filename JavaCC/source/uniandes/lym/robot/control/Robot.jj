@@ -287,6 +287,152 @@ TOKEN :
 		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})	 
 
 	}
+	
+
+	void jumpto() :
+	{
+	  //tocaria definir 6 variables?
+	  String v, p;
+	  Int f;
+	}
+	{
+	  (
+	    
+		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
+		|  	   <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
+		)
+		","
+		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
+		|  	   <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
+		)	
+			 
+
+	}
+
+	void look() :
+	{
+	  //tocaria definir 6 variables?
+	  String retorno;
+	  String coordl;
+	}
+	{
+	  (
+	    (< NORTH >|< SOUTH >|< WEST >|< EAST >){ coordl=token.image;salida = "Command: Turnright";}
+	    switch(coord) {
+	     case "West" : 
+	      	while (!world.facingWest()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	     case "South" :
+	      	while (!world.facingSouth()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	   	 case "North" :
+	     	 while (!world.facingNorth()) { 
+	     	 world.turnRight(); }
+	         break;
+	         
+	     case "East" :
+	     	while (!world.facingEast()) { 
+	     	world.turnRight(); }
+	      	break;
+	      	
+	 }
+	 retorno = "comando look";
+	 return retorno;
+	}
+
+	void grab() :
+	{
+	  	String v, p;
+		int f=1;	
+	}
+	{
+		( f=num() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
+		|( v=token.image() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
+		|( p=token.image() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
+		 		 
+
+	}
+
+	void free() :
+	{
+	  	String v, p;
+		int f=1;	
+	}
+	{
+		( f=num() {world.putBalloons(f); salida = "Command:  Grab Balloons";})
+		|( v=token.image() {world.putBalloons(f); salida = "Command:  Grab Balloons";})
+		|( p=token.image() {world.putBalloons(f); salida = "Command:  Grab Balloons";})	 
+
+	}
+		
+	void isvalid() :
+	{
+	  String s,j,g,po,p,f,d,k;
+	  Int f;
+	}
+	{
+	  
+		(
+		  ( <STEP>     s=token.image())}
+		|  	  ( <JUMP>   j=token.image())
+		|  	  ( <GRAB>   g=token.image())
+		|  	  ( <POP>   po=token.image())
+		|  	  ( <PICK>   p=token.image())
+		|  	  ( <FREE>   f=token.image())
+		|  	  ( <DROP>   d=token.image())
+		)
+		","
+		  ( <NUM> f=token.image())}
+		|  	  ( <VAR>   k=token.image())
+		
+	  	 
+
+	}
+
+	void canmove() :
+	{
+	  String s,j,k;
+	  Int f;
+	}
+	{
+	  
+		(< NORTH >|< SOUTH >|< WEST >|< EAST >){ coordl=token.image;salida = "Command: Turnright";}
+	    switch(coord) {
+	     case "West" : 
+	      	while (!world.facingWest()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	     case "South" :
+	      	while (!world.facingSouth()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	   	 case "North" :
+	     	 while (!world.facingNorth()) { 
+	     	 world.turnRight(); }
+	         break;
+	         
+	     case "East" :
+	     	while (!world.facingEast()) { 
+	     	world.turnRight(); }
+	      	break;
+		","
+		  ( <PARAM> f=token.image())}
+		|  	  ( <VAR>   j=token.image())
+		
+	  	 
+
+	}
+
+
+
 
 	void veer() :
 	{
@@ -314,25 +460,7 @@ TOKEN :
 	
 	}
 
-	void Dmove() :
-	{
-	  String v, p;
-	  Int f;
-	}
-	{
-	  
-		(
-		  ( <VAR>     v=var()}
-		|  	  ( <PARAM>   p=param()
-		|  	  ( <NUM>   f=num()
-)
-		","
-		(<Front>  //{dir=token.image; world.moveForward(x,false); salida = "Command:  Step foward n";}
-		|<BACK>) //{dir=token.image;  world.moveForward() ;}
-		
-	  	 
 
-	}
 	
 	void Omove() :
 	{
