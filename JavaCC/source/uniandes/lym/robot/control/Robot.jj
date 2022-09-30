@@ -121,13 +121,12 @@ TOKEN :
 }
 
 /*
-
 	void block() :
 	{
 			
 	}
 	{
-	     (inst(),)+ inst()
+	     (inst()",") inst()
 	}
 	
 	void inst() :
@@ -136,7 +135,7 @@ TOKEN :
 	}
 	{
 	    Controlstructure()
-    	| Command()
+    	| command()
 	}
 	
 
@@ -145,10 +144,14 @@ TOKEN :
 			
 	}
 	{
+	  (
+	   	<INICORCH>
+		(
+		  
 	    condicional()
 	    | loop()
 	    | repeat()
-		) ";" 
+		) 		| < ENDCORCH >";" 
 		//Se tiene que poner?
 		{
 		    try {
@@ -161,10 +164,29 @@ TOKEN :
 			return true;
 		})+
 
-    	| <EOF> {return false;} 
+    	| <EOF> {return false;}
+    	
 	}
 
-		void conditional() :
+	void loop() :
+	{
+			
+	}
+	{
+	  //falta n times
+        < WHILE>  condiciones() < DO >  block() < OD >
+	}
+	
+	void repeat() :
+	{
+			
+	}
+	{
+	  //falta n times
+        < REPEATTIMES>  block() < PER >
+	}
+
+		void condicional() :
 	{
 			
 	}
@@ -178,7 +200,7 @@ TOKEN :
 			
 	}
 	{
-        < If > conditiones() block() < ELSE > block() < FI >
+        < If > condiciones() block() < ELSE > block() < FI >
 	}
 
 
@@ -187,12 +209,12 @@ TOKEN :
 			
 	}
 	{
-        < If > condition() blockI()
+        < If > condiciones() block()
 
 	}
 	
 
-		void condition() :
+		void condiciones() :
 	{
 			
 	}
@@ -203,11 +225,10 @@ TOKEN :
 	    //falta variable
 	    | < ISVALID > (< GRAB >|< STEP >|< JUMP >|< FREE >|< PICK >|< DROP >) ","  
 	    | < CANMOVE > (< NORTH >|< WEST >|< EAST >|< SOUTH >) ","
-	    | < T_NOT > condition()
+	    | < NOT > condiciones()
 	    )
 	    < ENDCORCH  >
 	}
-
 */
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
