@@ -97,6 +97,9 @@ TOKEN: /* Nombres de Comandos */
     |< FI: "Fi" >
     |< REPEATTIMES: "Repeattimes" >
     |< PER: "Per" >
+    |< WHILE: "While">
+    |< OD:"Od" >
+    |< DO:"Do" >
 }
 
 TOKEN:
