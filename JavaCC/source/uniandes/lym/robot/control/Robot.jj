@@ -38,21 +38,20 @@ public class Robot
 
 
 	private RobotWorldDec world;
-	private HashMap<String, Integer > variables;
-	private HashMap<String, Integer > funciones;
-
+	//private HashMap<String, Integer > variables ;
+	//private HashMap<String, Integer > funciones;
 	
 	
 	void setWorld(RobotWorld w) {
 		world = (RobotWorldDec) w;
-		funciones = new HashMap<String, Integer>();
-		variables = new HashMap<String, Integer>();	
+		//funciones = new HashMap();
+		//variables= new HashMap();
+
 	}
 
 	String salida=new String();
+
 }
-
-
 PARSER_END(Robot)
 
 SKIP:
@@ -66,40 +65,42 @@ SKIP:
 TOKEN: /* Nombres de Comandos */
 {
 
-	< MOV:  "Mov" >
-	| < RIGHT: "RIGHT" >
-	| < PUT: "Put">
-	| < PICK: "Pick">
-	| < POP: "Pop" >
-	| < GO: "GO" >
-	| < VEER : "Veer" >
-	| < INICORCH : "(" >
-	| < ENDCORCH : ")" >
-	| < NORTH : "North" >
-	| < EAST : "East" >
-	| < WEST : "West" >
-	| < LOOK: "Look" >
-	| < SOUTH : "South" >
-    | < HOP:  "HOP" >
-    | < STEP: "Step" >
-    | < JUMP: "Jump" >
-    | < JUMPTO: "JumpTo" >
-    | < DROP: "Drop" >
-    | < GRAB: "Grab" >
-    | < GET: "Get" >
-    | < FREE: "Free" >
-    | < ISFACING : "Isfacing" >
-    | < ISVALID : "Isvalid" >
-    | < CANMOVE : "Canmove" >
-    | < NOT : "Not" >
-    |< If: "If" >
-    |< ELSE : "Else">
-    |< FI: "Fi" >
-    |< REPEATTIMES: "Repeattimes" >
-    |< PER: "Per" >
-    |< WHILE: "While">
-    |< OD:"Od" >
-    |< DO:"Do" >
+			<MOV:  "Mov">
+		| 	<RIGHT: "RIGHT">
+		| 	<PUT: "Put">
+		| 	<PICK: "Pick">
+		|  < POP: "Pop" >
+		|  <GO: "GO" >
+        |  < HOP:  "HOP" >
+        |  < STEP:  "STEP" >
+		| < VEER : "Veer" >
+		| < INICORCH : "(" >
+		| < ENDCORCH : ")" >
+		| < NORTH : "North" >
+		| < EAST : "East" >
+		| < WEST : "West" >
+		| < LOOK: "Look" >
+		| < SOUTH : "South" >
+        | < JUMP: "Jump" >
+        | < JUMPTO: "JumpTo" >
+        | < DROP: "Drop" >
+        | < GRAB: "Grab" >
+        | < GET: "Get" >
+        | < FREE: "Free" >
+        | < ISFACING : "Isfacing" >
+        | < ISVALID : "Isvalid" >
+        | < CANMOVE : "Canmove" >
+        | < NOT : "Not" >
+        |< If: "If" >
+        |< ELSE : "Else">
+        |< FI: "Fi" >
+        |< REPEATTIMES: "Repeattimes" >
+        |< PER: "Per" >
+        |< WHILE: "While">
+        |< OD:"Od" >
+        |< DO:"Do" >
+       	
+        //revisar tokens git
 }
 
 TOKEN:
@@ -110,19 +111,36 @@ TOKEN:
 }
 
 
+
 TOKEN :
 {
-		< NUM: (<DIGIT>)+ >
-		| < #DIGIT: ["0"-"9"] >
-		| < #UPPER : [ "A"-"Z" ] >
-		| < #LOWER : [ "a"-"z" ] >
-		| < VAR :  ( <UPPER> | <LOWER> ( <UPPER > | <LOWER> | <DIGIT> )* ) >
+		<NUM: (<DIGIT>)+ >
+		|  	<#DIGIT: ["0"-"9"] >
 		| 	< WORD: (< LETTER >)+ >
 		| 	< #LETTER: ["a"-"z"] >
         
 }
 
 /*
+
+	boolean inicio(Console sistema):
+	{
+	  salida = new String();
+	}
+	{
+	  (
+	    block()
+	  )+
+
+	{
+	  sistema.append(salida);
+	  return true;
+	}
+	
+	|	<EOF> {return false;}
+	
+	}
+	
 	void block() :
 	{
 			
@@ -172,10 +190,9 @@ TOKEN :
 
 	void loop() :
 	{
-			
+		bool c;
 	}
 	{
-	  //falta n times
         < WHILE>  condiciones() < DO >  block() < OD >
 	}
 	
@@ -248,7 +265,7 @@ TOKEN :
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
 		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
 		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}
-		//		| 	<STEP>  "(" step()")"}
+		//| 	<STEP>  "(" step()")"
 		//		| 	<DMOVE>  "(" Dmove() ")"}
 		//		| 	<OMOVE>  "(" Omove() ")"}
 		//		| 	<JUMPTO>  "(" jumpto() ")"}
@@ -256,9 +273,9 @@ TOKEN :
 		//		| 	<GRAB>  "(" grab() ")"}
 		//		| 	<FREE>  "(" free() ")"}
 		//		| 	<ISVALID>  "(" isvalid() ")"} 
-		//		| 	<CANMOVE>  "(" canmove() ")"}  
-		|  <PUT> "("  put() ")"
-		|  <PICK> "(" get()  ")"
+		//		| 	<CANMOVE>  "(" canmove() ")"}          
+		|  <PUT> "("  put() ")"					  			
+		|  <PICK> "(" get()  ")"	
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
 		) ";" 
 
@@ -279,9 +296,8 @@ TOKEN :
 /*
 	void step() :
 	{
-		int f=1;
-		v=var();
-		p=param();	
+	  String v, p;
+	  Int f;
 	}
 	{
 		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
@@ -289,7 +305,7 @@ TOKEN :
 		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})	 
 
 	}
-	
+
 
 	void jumpto() :
 	{
@@ -433,36 +449,6 @@ TOKEN :
 
 	}
 
-
-
-
-	void veer() :
-	{
-	  String d;
-	}
-
-	{ (
-	( < VAR > d=var()
-	)
-
-	< VEER > // {dir=token.image; world.veer(d); salida = "Command: Veer in direction d";}
-	
-	}
-
-	void isFacing() :
-	{
-	  String d;
-	}
-
-	{ (
-	( < VAR > d=var()
-	)
-
-	< ISFACING > // {dir=token.image; world.isFacing(d); salida = "Command: Facing direction d";}
-	
-	}
-
-
 	
 	void Omove() :
 	{
@@ -535,6 +521,4 @@ TOKEN :
 				throw new Error("Number out of bounds: "+token.image+" !!");
 			}
 			return total;
-		}
-	}
-	
+		}	
