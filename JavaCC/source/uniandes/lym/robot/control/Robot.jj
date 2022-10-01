@@ -104,6 +104,7 @@ TOKEN: /* Nombres de Comandos */
     |< PROG:"Prog" >
     |< GORP:"Gorp" >
     |< PROC: "Proc" >
+    |< ARROW: ":=" >
 }
 
 TOKEN:
