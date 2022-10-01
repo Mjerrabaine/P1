@@ -103,6 +103,7 @@ TOKEN: /* Nombres de Comandos */
     |< COMM:"," >
     |< PROG:"Prog" >
     |< GORP:"Gorp" >
+    |< PROC: "Proc" >
 }
 
 TOKEN:
@@ -575,6 +576,19 @@ TOKEN :
     return retornar; }	 
 
 	}
+
+	void Prog() :
+{
+
+	" { "
+	    (block()) + " }"
+	| 
+	< PROC > < VAR >  < INICORCH >  < VAR >  < COMM >  < VAR >  < ENDCORCH >
+	" { "
+	(block()) + " }"
+
+}
+
 	
 */	
 	void put() :
