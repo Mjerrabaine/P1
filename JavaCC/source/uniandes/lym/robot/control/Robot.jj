@@ -38,15 +38,15 @@ public class Robot
 
 
 	private RobotWorldDec world;
-	private HashMap<String, Integer > variables;
-	private HashMap<String, Integer > funciones;
+	//private HashMap<String, Integer > variables;
+	//private HashMap<String, Integer > funciones;
 
 	
 	
 	void setWorld(RobotWorld w) {
 		world = (RobotWorldDec) w;
-		funciones = new HashMap<String, Integer>();
-		variables = new HashMap<String, Integer>();	
+		//funciones = new HashMap<String, Integer>();
+		//variables = new HashMap<String, Integer>();	
 	}
 
 	String salida=new String();
