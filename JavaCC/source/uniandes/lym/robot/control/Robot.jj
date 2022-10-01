@@ -165,9 +165,9 @@ TOKEN :
 	" { "
 	    (block()) + " }"
 	| 
-	< PROC > < VAR > {l=token.image(); listaparam.add(l)}
-	< INICORCH >  < VAR >{m=token.image(); listavar.add(m)}
-	< COMM >  < VAR > {j=token.image(); listavar.add(j)}
+	< PROC > < VAR > {l=token.image(); listaparam.add(l);}
+	< INICORCH >  < VAR >{m=token.image(); listavar.add(m);}
+	< COMM >  < VAR > {j=token.image(); listavar.add(j);}
 	< ENDCORCH >
 	" { "
 	(block())" }"
