@@ -103,7 +103,6 @@ TOKEN: /* Nombres de Comandos */
     |< COMM:"," >
     |< PROG:"Prog" >
     |< GORP:"Gorp" >
-    |< VAR:"Var" >
 }
 
 TOKEN:
