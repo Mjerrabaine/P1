@@ -139,7 +139,7 @@ TOKEN :
 	    //listvar()
 
 	    " { "
-	    (block()) + " }"
+	    (defun()) + " }"
 	    
 	            < GORP>
 
@@ -156,6 +156,18 @@ TOKEN :
 
     	| <EOF> {return false;}
   }
+  
+  	void defun() :
+{
+
+	" { "
+	    (block()) + " }"
+	| 
+	< PROC > < VAR >  < INICORCH >  < VAR >  < COMM >  < VAR >  < ENDCORCH >
+	" { "
+	(block())" }"
+
+}
 
 	void block() :
 	{
@@ -576,18 +588,6 @@ TOKEN :
     return retornar; }	 
 
 	}
-
-	void defun() :
-{
-
-	" { "
-	    (block()) + " }"
-	| 
-	< PROC > < VAR >  < INICORCH >  < VAR >  < COMM >  < VAR >  < ENDCORCH >
-	" { "
-	(block())" }"
-
-}
 
 	
 */	
