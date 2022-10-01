@@ -160,11 +160,15 @@ TOKEN :
   
   	void defun() :
 {
-
+	String j,l,m;
+}
 	" { "
 	    (block()) + " }"
 	| 
-	< PROC > < VAR >  < INICORCH >  < VAR >  < COMM >  < VAR >  < ENDCORCH >
+	< PROC > < VAR > {l=token.image(); listaparam.add(l)}
+	< INICORCH >  < VAR >{m=token.image(); listavar.add(m)}
+	< COMM >  < VAR > {j=token.image(); listavar.add(j)}
+	< ENDCORCH >
 	" { "
 	(block())" }"
 
