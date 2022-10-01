@@ -31,6 +31,8 @@ import java.awt.Point;
 import java.io.*;
 import java.util.Vector;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @SuppressWarnings("serial")
 public class Robot 
@@ -38,17 +40,19 @@ public class Robot
 
 
 	private RobotWorldDec world;
-	//private HashMap<String, Integer > variables;
 	//private HashMap<String, Integer > funciones;
 
 	
 	
 	void setWorld(RobotWorld w) {
 		world = (RobotWorldDec) w;
-		//funciones = new HashMap<String, Integer>();
+
 		//variables = new HashMap<String, Integer>();	
 	}
 
+	ArrayList<String> listaprog = new ArrayList<String>();
+	ArrayList<String> listavar = new ArrayList<String>();
+	HashMap<String, String > funciones = new HashMap<String, String>();
 	String salida=new String();
 }
 
@@ -107,6 +111,7 @@ TOKEN: /* Nombres de Comandos */
     |< ARROW: ":=" >
     |< LEFT: "Left" >
     |< AROUND: "Around" >
+    |< VARIABLE: "Var" >
 }
 
 TOKEN:
@@ -129,7 +134,7 @@ TOKEN :
         
 }
 
-/*
+
 	boolean programa(Console sistema):
 	{
 	  salida = new String();
@@ -142,7 +147,7 @@ TOKEN :
 	    //listvar()
 
 	    " { "
-	    (defun()) + " }"
+	    (defun())+ " }"
 	    
 	            < GORP>
 
@@ -164,12 +169,14 @@ TOKEN :
 {
 	String j,l,m;
 }
+	{
+
 	" { "
 	    (block()) + " }"
 	| 
-	< PROC > < VAR > {l=token.image(); listaparam.add(l);}
-	< INICORCH >  < VAR >{m=token.image(); listavar.add(m);}
-	< COMM >  < VAR > {j=token.image(); listavar.add(j);}
+	< PROC > < VAR > {l=token.image; listaprog.add(l);}
+	< INICORCH >  < VAR >{m=token.image; listavar.add(m);}
+	< COMM >  < VAR > {j=token.image; listavar.add(j);}
 	< ENDCORCH >
 	" { "
 	(block())" }"
@@ -192,7 +199,7 @@ TOKEN :
 	}
 	{
 	    //Controlstructure()
-    	 command()
+    	 //commandos()
 
     	 {salida= "comando instruccion";}
 	}
@@ -204,14 +211,14 @@ TOKEN :
 	}
 	{
  	
-	  	  ((< VAR><WORD> { x=token.image() }<COMM>)*
-	  	   |(< VAR> < WORD> x=token.image()) ";" {variables.put(x,0);salida= "comando lista variables";}
+	  	  < VARIABLE>  (<VAR> <COMM>)* 
+	  	  |(< VAR> ) ";" {x=token.image; listavar.add(x);salida= "comando lista variables";}
 
 	}
 
 
 	
-
+/*
 		void Controlstructure() :
 	{
 			
@@ -304,10 +311,10 @@ TOKEN :
 */
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
-	{	
+	{
+	  salida = new String();	
 		
-		int x,y;
-		salida=new String();	
+		int x,y;	
 	}
 
 	
@@ -332,7 +339,6 @@ TOKEN :
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
 		) ";" 
-
 		{
 		    try {
 	    			 Thread.sleep(900);
@@ -344,8 +350,10 @@ TOKEN :
 			return true;
 		})+
 
-    	| <EOF> {return false;} 
-	}  
+    	| <EOF> {return false;}
+
+	}
+  
 /*
 	void step() :
 	{
@@ -353,7 +361,7 @@ TOKEN :
 		v=var();
 		String p;
 	{
-		( <VAR>     {p=token.image(); variables.put("step", p);}
+		( <VAR>     {p=token.image; variables.put("step", p);}
 		|  	  ( <PARAM>   v=var()
 		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})	 
 
@@ -370,12 +378,12 @@ TOKEN :
 	{
 	  (
 	    
-		( <VAR>     {p=token.image(); variables.put("jumpto", p);}
+		( <VAR>     {p=token.image; variables.put("jumpto", p);}
 		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
 		|  	   <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
 		)
 		","
-		( <VAR>     {pa=token.image(); variables.put("step", pa);}
+		( <VAR>     {pa=token.image; variables.put("step", pa);}
 		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
 		|  	   <NUM>   k=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
 		)
@@ -395,7 +403,7 @@ TOKEN :
 	}
 	{
 	(
-		( <VAR>     {p=token.image(); variables.put("jump", p);}
+		( <VAR>     {p=token.image; variables.put("jump", p);}
 		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
 		|  	   <NUM>   n=num() {world.moveForward(x,true); salida = "Command:  Jump n";})
 		)
@@ -682,7 +690,7 @@ TOKEN :
     		 		  	metodocorrer();
     		 		  	}
 		}
-		
+
 	}
 
 	
