@@ -577,7 +577,7 @@ TOKEN :
 
 	}
 
-	void Prog() :
+	void defun() :
 {
 
 	" { "
@@ -585,7 +585,7 @@ TOKEN :
 	| 
 	< PROC > < VAR >  < INICORCH >  < VAR >  < COMM >  < VAR >  < ENDCORCH >
 	" { "
-	(block()) + " }"
+	(block())" }"
 
 }
 
