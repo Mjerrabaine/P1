@@ -375,6 +375,19 @@ TOKEN :
 
 	}
 
+	void pop() :
+	{
+	  	String v, p;
+		int f=1;	
+	}
+	{
+		( f=num() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
+		|( v=token.image() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
+		|( p=token.image() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
+		 		 
+
+	}
+
 	void free() :
 	{
 	  	String v, p;
@@ -480,9 +493,9 @@ TOKEN :
 		int f=1;	
 	}
 	{
-		( f=num() {world.getChips(f); salida = "Command:  Get chips";})
-		|( v=token.image() {world.getChips(f); salida = "Command:  Get chips";})
-		|( p=token.image() {world.getChips(f); salida = "Command:  Get chips";})
+		( f=num() {world.getChips(f); salida = "Command:  Get Chips";})
+		|( v=token.image() {world.getChips(f); salida = "Command:  Get Chips";})
+		|( p=token.image() {world.getChips(f); salida = "Command:  Get Chips";})
 		 		 
 
 	}
