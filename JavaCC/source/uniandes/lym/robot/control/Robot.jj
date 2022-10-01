@@ -123,25 +123,73 @@ TOKEN :
 }
 
 /*
-	void block() :
+	boolean programa(Console sistema):
 	{
-			
+	  salida = new String();
 	}
 	{
-	     (inst()",") inst()
+	  
+	  (
+	    < PROG>
+
+	    //listvar()
+
+	    " { "
+	    (block()) + " }"
+	    
+	            < GORP>
+
+		{
+		    try {
+	    			 Thread.sleep(900);
+	    	    } catch (InterruptedException e) {
+	    			        System.err.format("IOException: %s%n", e);
+	    		    }
+	    			 
+			sistema.printOutput(salida);
+			return true;
+		})+
+
+    	| <EOF> {return false;}
+  }
+
+	void block() :
+	{
+		String salida;	
+	}
+	{
+			//como hago para que salga mas veces	  	
+	  	  inst() < COMM> inst()
+	     {salida= "comando block";}
 	}
 	
 	void inst() :
 	{
-			
+			String salida;
 	}
 	{
-	    Controlstructure()
-    	| command()
+	    //Controlstructure()
+    	 command()
+
+    	 {salida= "comando instruccion";}
 	}
 	
+ 
+	void listvar() :
+	{
+		String salida, x;	
+	}
+	{
+ 	
+	  	  ((< VAR><WORD> { x=token.image() }<COMM>)*
+	  	   |(< VAR> < WORD> x=token.image()) ";" {variables.put(x,0);salida= "comando lista variables";}
 
-		boolean Controlstructure() :
+	}
+
+
+	
+
+		void Controlstructure() :
 	{
 			
 	}
@@ -172,10 +220,9 @@ TOKEN :
 
 	void loop() :
 	{
-			
+		bool c;
 	}
 	{
-	  //falta n times
         < WHILE>  condiciones() < DO >  block() < OD >
 	}
 	
