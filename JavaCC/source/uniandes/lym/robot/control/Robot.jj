@@ -100,6 +100,10 @@ TOKEN: /* Nombres de Comandos */
     |< WHILE: "While">
     |< OD:"Od" >
     |< DO:"Do" >
+    |< COMM:"," >
+    |< PROG:"Prog" >
+    |< GORP:"Gorp" >
+    |< VAR:"Var" >
 }
 
 TOKEN:
