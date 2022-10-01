@@ -456,7 +456,7 @@ TOKEN :
 	( < VAR > d=var()
 	)
 
-	< VEER > // {dir=token.image; world.veer(d); salida = "Command: Veer in direction d";}
+	{dir=token.image(); world.veer(d); salida = "Command: Veer in direction d";}
 	
 	}
 
@@ -469,10 +469,23 @@ TOKEN :
 	( < VAR > d=var()
 	)
 
-	< ISFACING > // {dir=token.image; world.isFacing(d); salida = "Command: Facing direction d";}
+	{dir=token().image; world.isFacing(d); salida = "Command: Facing direction d";}
 	
 	}
 
+	void get() :
+
+	{
+	  	String v, p;
+		int f=1;	
+	}
+	{
+		( f=num() {world.grabChips(f); salida = "Command:  Grab Chips";})
+		|( v=token.image() {world.grabChips(f); salida = "Command:  Grab Chips";})
+		|( p=token.image() {world.grabChips(f); salida = "Command:  Grab Chips";})
+		 		 
+
+	}
 
 	
 	void Omove() :
