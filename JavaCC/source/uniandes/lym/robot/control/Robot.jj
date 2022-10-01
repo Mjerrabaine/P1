@@ -105,6 +105,8 @@ TOKEN: /* Nombres de Comandos */
     |< GORP:"Gorp" >
     |< PROC: "Proc" >
     |< ARROW: ":=" >
+    |< LEFT: "Left" >
+    |< AROUND: "Around" >
 }
 
 TOKEN:
@@ -324,7 +326,8 @@ TOKEN :
 		//		| 	<GRAB>  "(" grab() ")"}
 		//		| 	<FREE>  "(" free() ")"}
 		//		| 	<ISVALID>  "(" isvalid() ")"} 
-		//		| 	<CANMOVE>  "(" canmove() ")"}  
+		//		| 	<CANMOVE>  "(" canmove() ")"}
+		//		| 	<VAR>  "(" llamadofun() ")"}     
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
@@ -342,18 +345,16 @@ TOKEN :
 		})+
 
     	| <EOF> {return false;} 
-	}
-
+	}  
 /*
 	void step() :
 	{
 		int f=1;
 		v=var();
-		p=param();	
-	}
+		String p;
 	{
-		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
-		|  	  ( <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
+		( <VAR>     {p=token.image(); variables.put("step", p);}
+		|  	  ( <PARAM>   v=var()
 		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})	 
 
 	}
@@ -362,21 +363,27 @@ TOKEN :
 	void jumpto() :
 	{
 	  //tocaria definir 6 variables?
-	  String v, p;
-	  Int f;
+	  String v, p, pa;
+	  Int f=0 ;
+	  Int k=0 ;
 	}
 	{
 	  (
 	    
-		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		( <VAR>     {p=token.image(); variables.put("jumpto", p);}
 		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
 		|  	   <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
 		)
 		","
-		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		( <VAR>     {pa=token.image(); variables.put("step", pa);}
 		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
-		|  	   <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
-		)	
+		|  	   <NUM>   k=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
+		)
+
+		//no estoy seguro
+		if(f > 0 && k > 0 )		{
+		  {world.setPosition(p,pa)}
+		}
 			 
 
 	}
@@ -388,13 +395,14 @@ TOKEN :
 	}
 	{
 	(
-		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		( <VAR>     {p=token.image(); variables.put("jump", p);}
 		|  	  <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
-		|  	   <NUM>   n=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
+		|  	   <NUM>   n=num() {world.moveForward(x,true); salida = "Command:  Jump n";})
 		)
 	)
 }
 
+/*
 	void look() :
 	{
 	  //tocaria definir 6 variables?
@@ -429,29 +437,33 @@ TOKEN :
 	 retorno = "comando look";
 	 return retorno;
 	}
-
+*/
+/*
 	void grab() :
 	{
 	  	String v, p;
-		int f=1;	
+		int f=0;	
 	}
 	{
-		( f=num() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
-		|( v=token.image() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
-		|( p=token.image() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
+		<VAR> {p=token.image(); variables.put	("jump", p);}
+		|<PARAM>( v=token.image() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
+		|<NUM>( f=token.image() {world.grabBalloons(f); salida = "Command:  Grab Balloons";})
 		 		 
 
 	}
+	
 
+
+	
 	void pop() :
 	{
 	  	String v, p;
 		int f=1;	
 	}
 	{
-		( f=num() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
-		|( v=token.image() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
-		|( p=token.image() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
+		<VAR>{p=token.image(); variables.put("jump", p);}
+		|<PARAM> ( v=token.image() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
+		|<NUM>( f=token.image() {world.popBalloons(f); salida = "Command:  Pop Balloons";})
 		 		 
 
 	}
@@ -462,9 +474,9 @@ TOKEN :
 		int f=1;	
 	}
 	{
-		( f=num() {world.putBalloons(f); salida = "Command:  Grab Balloons";})
-		|( v=token.image() {world.putBalloons(f); salida = "Command:  Grab Balloons";})
-		|( p=token.image() {world.putBalloons(f); salida = "Command:  Grab Balloons";})	 
+		<VAR>( f=num() {p=token.image(); variables.put("jump", p);}
+		|<PARAM>( v=token.image() {world.putBalloons(f); salida = "Command:  Free Balloons";})
+		|<NUM>( f=token.image() {world.puBalloons(f); salida = "Command:  Pop Balloons";}) 
 
 	}
 		
@@ -476,19 +488,42 @@ TOKEN :
 	{
 	  
 		(
-		  ( <STEP>     s=token.image())}
-		|  	  ( <JUMP>   j=token.image())
-		|  	  ( <GRAB>   g=token.image())
-		|  	  ( <POP>   po=token.image())
-		|  	  ( <PICK>   p=token.image())
-		|  	  ( <FREE>   f=token.image())
-		|  	  ( <DROP>   d=token.image())
+		   <STEP>     s=token.image() //{s=token.image(); variables.put("jump", p);}
+		|  	   <JUMP>   j=token.image() //{j=token.image(); variables.put("jump", p);}
+		|  	   <GRAB>   g=token.image() //{g=token.image(); variables.put("jump", p);}
+		|  	   <POP>   po=token.image() //{po=token.image(); variables.put("jump", p);}
+		|  	   <PICK>   p=token.image() //{p=token.image(); variables.put("jump", p);}
+		|  	   <FREE>   f=token.image() //{f=token.image(); variables.put("jump", p);}
+		|  	   <DROP>   d=token.image() //{d=token.image(); variables.put("jump", p);}
 		)
 		","
-		  ( <NUM> f=token.image())}
-		|  	  ( <VAR>   k=token.image())
+		  (
+		     <NUM> {f=token.image(); salida = "Command:  Grab Balloons";}
+		|  	  ( <VAR>   k=token.image() {s=token.image(); variables.put("jump", p);})
+			)		
+	  	if(!s.isEmpy()) 	{
+			world.moveForward(f);
+		}
+		else if(!j.isEmpy())	{
+			world.moveForward(j);
+		}
+		else if(!g.isEmpy())	{
+			world.moveForward(g);
+		}
+
+		else if(!po.isEmpy())	{
+			world.moveForward(po);
+		}
+		else if(!p.isEmpy())	{
+			world.moveForward(p);
+		}
+		else if(!f.isEmpy())	{
+			world.moveForward(f);
+		}
+		else	{
+			world.moveForward(d);
+		}
 		
-	  	 
 
 	}
 
@@ -534,23 +569,50 @@ TOKEN :
 	}
 
 	{ (
-	( < VAR > d=var()
-	)
-
-	{dir=token.image(); world.veer(d); salida = "Command: Veer in direction d";}
+	(< LEFT >|< RIGHT >|< AROUND >) {dir=token.image();}
+		    switch(dir) {
+	     case "L" : 
+			{ world.turnRight();}
+			{ world.turnRight();}
+			{ world.turnRight();salida = "Command: Veer";}
+	      	
+	     case "R" :
+			{ world.turnRight(); salida = "Command: Veer";}
+	      	
+	   	 case "A" :
+			{ world.turnRight();}
+			{ world.turnRight(); salida = "Command: Veer";}
+		)
 	
 	}
 
 	void isFacing() :
 	{
-	  String d;
+	  String coord;
 	}
 
-	{ (
-	( < VAR > d=var()
-	)
+	{ 
 
-	{dir=token().image; world.isFacing(d); salida = "Command: Facing direction d";}
+	(< NORTH >|< SOUTH >|< WEST >|< EAST >){ coordl=token.image;salida = "Command: Turnright";}
+	    switch(coord) {
+	     case "West" : 
+	      	while (!world.facingWest()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	     case "South" :
+	      	while (!world.facingSouth()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	   	 case "North" :
+	     	 while (!world.facingNorth()) { 
+	     	 world.turnRight(); }
+	         break;
+	         
+	     case "East" :
+	     	while (!world.facingEast()) { 
+	     	world.tu
 	
 	}
 
@@ -561,9 +623,9 @@ TOKEN :
 		int f=1;	
 	}
 	{
-		( f=num() {world.getChips(f); salida = "Command:  Get Chips";})
-		|( v=token.image() {world.getChips(f); salida = "Command:  Get Chips";})
-		|( p=token.image() {world.getChips(f); salida = "Command:  Get Chips";})
+		 <NUM> {f=token.image(); world.getChips(f); salida = "Command:  Get Chips";}
+		| <VAR> {v=token.image(); variables.put("get", v)
+		| <PARAM> p=token.image() {world.getChips(f); salida = "Command:  Get Chips";}
 		 		 
 
 	}
@@ -572,26 +634,55 @@ TOKEN :
 	void Omove() :
 	{
 	  String d;
+	  String v;
 	   String p;
+	   int f;
 	   
 	}
 	{
-		( <VAR>     p=param() {world.moveForward(parametros.get(p),false); salida = "Command:  Step foward var";}}
+		( <VAR>    {v=token.image(); variables.put("Omove", v)
 		|  	  ( <PARAM>   v=var(); {world.moveForward(parametros.get(v),false); salida = "Command:  Step param";}}
-		|  	  ( <NUM>   f=num() {world.moveForward(x,false); salida = "Command:  Step foward n";})
+		|  	  ( <NUM>    {f=num();})
 
+		","		
+	  	< T_ROTATE > ("NORTH"|"SOUTH"|"EAST"|"WEST") {d= token.image ;} {
+	    	switch(d) {
+	     case "West" : 
+	      	while (!world.facingWest()) { 
+	      	world.turnRight(); }
+	      	break;	      	
+	     case "South" :
+	      	while (!world.facingSouth()) { 
+	      	world.turnRight(); }
+	      	break;
+	      	
+	   	 case "North" :
+	     	 while (!world.facingNorth()) { 
+	     	 world.turnRight(); }
+	         break;
+	         
+	     case "East" :
+	     	while (!world.facingEast()) { 
+	     	world.tu
+  		}
+  		{world.moveForward(f,false);}
+	}
 
-
+	void llamadofun() :
+	{
+		int f=1;
+		String v;
+		String p;	
+	}
+	{
+		( <VAR>    {p=token.image();
+		    		 if (!parametros.contains(p))
+    		 			throw new  Error("funcion" + p + "no se ha definido aun");
+    		 		else	{
+    		 		  	metodocorrer();
+    		 		  	}
+		}
 		
-	  	< T_ROTATE > ("north"|"south"|"east"|"west") {d= token.image ;} {
-	    if (d.equalsIgnoreCase("North")) { world.turnRight();world.turnRight();world.turnRight(); }
-	    else if (d.equalsIgnoreCase("back")) { world.turnRight();world.turnRight(); }
-	    else if (d.equalsIgnoreCase("right")) { world.turnRight(); }
-	    retornar= "comando Omove";
-  }
-  {
-    return retornar; }	 
-
 	}
 
 	
@@ -643,4 +734,3 @@ TOKEN :
 			return total;
 		}
 	}
-	
