@@ -480,9 +480,9 @@ TOKEN :
 		int f=1;	
 	}
 	{
-		( f=num() {world.grabChips(f); salida = "Command:  Grab Chips";})
-		|( v=token.image() {world.grabChips(f); salida = "Command:  Grab Chips";})
-		|( p=token.image() {world.grabChips(f); salida = "Command:  Grab Chips";})
+		( f=num() {world.getChips(f); salida = "Command:  Get chips";})
+		|( v=token.image() {world.getChips(f); salida = "Command:  Get chips";})
+		|( p=token.image() {world.getChips(f); salida = "Command:  Get chips";})
 		 		 
 
 	}
