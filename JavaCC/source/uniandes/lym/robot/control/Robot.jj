@@ -134,78 +134,7 @@ TOKEN :
         
 }
 
-/*
-	boolean programa(Console sistema):
-	{
-	  salida = new String();
-	}
-	{
-	  
-	  (
-	    < PROG>
 
-	    //listvar()
-
-	    " { "
-	    (defun())+ " }"
-	    
-	            < GORP>
-
-		{
-		    try {
-	    			 Thread.sleep(900);
-	    	    } catch (InterruptedException e) {
-	    			        System.err.format("IOException: %s%n", e);
-	    		    }
-	    			 
-			sistema.printOutput(salida);
-			return true;
-		})+
-
-    	| <EOF> {return false;}
-  }
-
-  
-  	void defun() :
-{
-	String j,l,m;
-}
-	{
-
-	" { "
-	    (block()) + " }"
-	| 
-	< PROC > < VAR > {l=token.image; listaprog.add(l);}
-	< INICORCH >  < VAR >{m=token.image; listavar.add(m);}
-	< COMM >  < VAR > {j=token.image; listavar.add(j);}
-	< ENDCORCH >
-	" { "
-	(block())" }"
-
-}
-
-	void block() :
-	{
-		String salida;	
-	}
-	{
-			//como hago para que salga mas veces	  	
-	  	  inst() < COMM> inst()
-	     {salida= "comando block";}
-	}
-	
-	void inst() :
-	{
-			String salida;
-	}
-	{
-	    //Controlstructure()
-    	 //commandos()
-
-    	 {salida= "comando instruccion";}
-	}
-	
- */
 	void listvar() :
 	{
 		String salida, x;	
@@ -218,43 +147,56 @@ TOKEN :
 	}
 
 
-	
-/*
-		void Controlstructure() :
+		void controlstructure() :
 	{
 			
 	}
 	{
-	  (
-	   	<INICORCH>
 		(
 		  
 	    condicional()
 	    | loop()
 	    | repeat()
-		) 		| < ENDCORCH >";" 
-		//Se tiene que poner?
-		{
-		    try {
-	    			 Thread.sleep(900);
-	    	    } catch (InterruptedException e) {
-	    			        System.err.format("IOException: %s%n", e);
-	    		    }
-	    			 
-			sistema.printOutput(salida);
-			return true;
-		})+
-
-    	| <EOF> {return false;}
-    	
+		)
+		//Se tiene que poner?    	
 	}
 
 	void loop() :
 	{
-		bool c;
+
 	}
 	{
         < WHILE>  condiciones() < DO >  block() < OD >
+	}
+
+
+	void block() :
+	{
+	  salida = new String();		
+		int x,y;
+	}
+	{
+		"{"
+				  (
+		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
+		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
+		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
+		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}
+		//		| 	<STEP>  "(" step()")"}
+		//		| 	<DMOVE>  "(" Dmove() ")"}
+		//		| 	<OMOVE>  "(" Omove() ")"}
+		//		| 	<JUMPTO>  "(" jumpto() ")"}
+		//		| 	<LOOK>  "(" look() ")"}
+		//		| 	<GRAB>  "(" grab() ")"}
+		//		| 	<FREE>  "(" free() ")"}
+		//		| 	<ISVALID>  "(" isvalid() ")"} 
+		//		| 	<CANMOVE>  "(" canmove() ")"}
+		//		| 	<VAR>  "(" llamadofun() ")"}     
+		|  <PUT> "("  put() ")"
+		|  <PICK> "(" get()  ")"
+	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
+		) ";"
+		"}"
 	}
 	
 	void repeat() :
@@ -271,26 +213,7 @@ TOKEN :
 			
 	}
 	{
-	    condicionalif()
-	    | condicionalelse()
-	}
-
-			void condicionalif() :
-	{
-			
-	}
-	{
-        < If > condiciones() block() < ELSE > block() < FI >
-	}
-
-
-		void condicionalelse() :
-	{
-			
-	}
-	{
-        < If > condiciones() block()
-
+        < If > condiciones() block() (< ELSE > block())? < FI >
 	}
 	
 
@@ -309,7 +232,7 @@ TOKEN :
 	    )
 	    < ENDCORCH  >
 	}
-*/
+
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
 	{
@@ -352,7 +275,6 @@ TOKEN :
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
 		) ";"
-
 		"}"
 		)+
 		<GORP>
