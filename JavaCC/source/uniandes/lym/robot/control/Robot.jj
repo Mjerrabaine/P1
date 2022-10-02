@@ -325,12 +325,14 @@ TOKEN :
 		(
 		  <PROG>
 		  listvar()
-		  
+		  (
+		    
 		  < PROC > < VAR > {l=token.image; listaprog.add(l);}
 			< INICORCH >  < VAR >{m=token.image; listavar.add(m);}
 			< COMM >  < VAR > {j=token.image; listavar.add(j);}
 			< ENDCORCH >
 		 	"{"
+		 	  
 		  (
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
@@ -352,7 +354,7 @@ TOKEN :
 		) ";"
 
 		"}"
-		
+		)+
 		<GORP>
 
 		{
