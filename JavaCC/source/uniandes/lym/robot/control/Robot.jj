@@ -195,6 +195,8 @@ TOKEN :
 		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}   
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
+		| 	<JUMP> "(" ( <VAR> | <NUM> )")"  {salida = "Command jump";}
+		| 	<VEER> "(" ( <LEFT> | <RIGHT> | <AROUND> )")"  {salida = "Command veer";}	
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
 		)
 		"}"
@@ -271,6 +273,8 @@ TOKEN :
 		| 	<LOOK>  "(" (< NORTH > | < EAST > | < SOUTH > | < WEST >) ")" {salida = "Command Look";}
 		| 	<GRAB> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Grab";}
 		| 	<FREE> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Free";}
+		| 	<JUMP> "(" ( <VAR> | <NUM> )")"  {salida = "Command jump";}
+		| 	<VEER> "(" ( <LEFT> | <RIGHT> | <AROUND> )")"  {salida = "Command veer";}	
 		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}       
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
