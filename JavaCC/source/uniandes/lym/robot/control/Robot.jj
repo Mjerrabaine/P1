@@ -192,7 +192,7 @@ TOKEN :
 		//		| 	<LOOK>  "(" look() ")"}
 		//		| 	<GRAB>  "(" grab() ")"}
 		//		| 	<FREE>  "(" free() ")"}
-		//		| 	<VAR>  "(" llamadofun() ")"}     
+		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}   
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
@@ -271,7 +271,7 @@ TOKEN :
 		//		| 	<LOOK>  "(" look() ")"}
 		//		| 	<GRAB>  "(" grab() ")"}
 		//		| 	<FREE>  "(" free() ")"}
-		//		| 	<VAR>  "(" llamadofun() ")"}     
+		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}       
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
