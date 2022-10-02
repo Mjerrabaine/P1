@@ -189,9 +189,9 @@ TOKEN :
 		| 	<OMOVE>	"(" ( <VAR> | <NUM> ) "," (<NORTH>|<SOUTH>|<EAST>|<WEST>) ")" {salida = "Command Omove";} //| 	<OMOVE>  "(" Omove() ")"}
 		| 	<DMOVE>	"(" ( <VAR> | <NUM> ) "," (<FRONT>|<RIGHT>|<LEFT>|<BACK>) ")" {salida = "Command Dmove";}  //<DMOVE>  "(" Dmove() ")"}
 		| 	<JUMPTO> "(" ( <VAR> | <NUM> ) "," ( <VAR> | <NUM> )")"  {salida = "Command jumpto";}	//<JUMPTO>  "(" jumpto() ")"}
-		//		| 	<LOOK>  "(" look() ")"}
-		//		| 	<GRAB>  "(" grab() ")"}
-		//		| 	<FREE>  "(" free() ")"}
+		| 	<LOOK>  "(" (< NORTH > | < EAST > | < SOUTH > | < WEST >) ")" {salida = "Command Look";}
+		| 	<GRAB> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Grab";}
+		| 	<FREE> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Free";}
 		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}   
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
@@ -268,9 +268,9 @@ TOKEN :
 		| 	<OMOVE>	"(" ( <VAR> | <NUM> ) "," (<NORTH>|<SOUTH>|<EAST>|<WEST>) ")" {salida = "Command Omove";} //| 	<OMOVE>  "(" Omove() ")"}
 		| 	<DMOVE>	"(" ( <VAR> | <NUM> ) "," (<FRONT>|<RIGHT>|<LEFT>|<BACK>) ")" {salida = "Command Dmove";}  //<DMOVE>  "(" Dmove() ")"}
 		| 	<JUMPTO> "(" ( <VAR> | <NUM> ) "," ( <VAR> | <NUM> )")"  {salida = "Command jumpto";}	//<JUMPTO>  "(" jumpto() ")"}
-		//		| 	<LOOK>  "(" look() ")"}
-		//		| 	<GRAB>  "(" grab() ")"}
-		//		| 	<FREE>  "(" free() ")"}
+		| 	<LOOK>  "(" (< NORTH > | < EAST > | < SOUTH > | < WEST >) ")" {salida = "Command Look";}
+		| 	<GRAB> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Grab";}
+		| 	<FREE> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Free";}
 		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}       
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
