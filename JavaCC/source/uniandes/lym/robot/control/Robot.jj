@@ -145,8 +145,8 @@ TOKEN :
 	}
 	{
  	
-	  	  < VARIABLE>  ((<VAR> <COMM>) 
-	  	  (<VAR>))+ ";" {x=token.image; listavar.add(x);salida= "comando lista variables";}
+	  	  < VARIABLE > (<VAR> (<COMM>|";"))+
+	  	  {x=token.image; listavar.add(x);salida= "comando lista variables";}
 
 	}
 
