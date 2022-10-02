@@ -112,6 +112,10 @@ TOKEN: /* Nombres de Comandos */
     |< LEFT: "Left" >
     |< AROUND: "Around" >
     |< VARIABLE: "Var" >
+    |< DMOVE: "Dmove" >
+    |< OMOVE: "Omove" >
+    |< FRONT: "Front" >
+    |< BACK: "Back" >
 }
 
 TOKEN:
@@ -181,15 +185,13 @@ TOKEN :
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
 		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
 		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}
-		//		| 	<STEP>  "(" step()")"}
-		//		| 	<DMOVE>  "(" Dmove() ")"}
-		//		| 	<OMOVE>  "(" Omove() ")"}
-		//		| 	<JUMPTO>  "(" jumpto() ")"}
+		| 		<STEP>  "(" ( <VAR> | <NUM> ) ")" {salida = "Command Step";}
+		| 	<OMOVE>	"(" ( <VAR> | <NUM> ) "," (<NORTH>|<SOUTH>|<EAST>|<WEST>) ")" {salida = "Command Omove";} //| 	<OMOVE>  "(" Omove() ")"}
+		| 	<DMOVE>	"(" ( <VAR> | <NUM> ) "," (<FRONT>|<RIGHT>|<LEFT>|<BACK>) ")" {salida = "Command Dmove";}  //<DMOVE>  "(" Dmove() ")"}
+		| 	<JUMPTO> "(" ( <VAR> | <NUM> ) "," ( <VAR> | <NUM> )")"  {salida = "Command jumpto";}	//<JUMPTO>  "(" jumpto() ")"}
 		//		| 	<LOOK>  "(" look() ")"}
 		//		| 	<GRAB>  "(" grab() ")"}
 		//		| 	<FREE>  "(" free() ")"}
-		//		| 	<ISVALID>  "(" isvalid() ")"} 
-		//		| 	<CANMOVE>  "(" canmove() ")"}
 		//		| 	<VAR>  "(" llamadofun() ")"}     
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
@@ -262,15 +264,13 @@ TOKEN :
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
 		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
 		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}
-		//		| 	<STEP>  "(" step()")"}
-		//		| 	<DMOVE>  "(" Dmove() ")"}
-		//		| 	<OMOVE>  "(" Omove() ")"}
-		//		| 	<JUMPTO>  "(" jumpto() ")"}
+		| 	<STEP> "(" ( <VAR> | <NUM> ) ")" {salida = "Command Step";}//<STEP>  "(" step()")"}
+		| 	<OMOVE>	"(" ( <VAR> | <NUM> ) "," (<NORTH>|<SOUTH>|<EAST>|<WEST>) ")" {salida = "Command Omove";} //| 	<OMOVE>  "(" Omove() ")"}
+		| 	<DMOVE>	"(" ( <VAR> | <NUM> ) "," (<FRONT>|<RIGHT>|<LEFT>|<BACK>) ")" {salida = "Command Dmove";}  //<DMOVE>  "(" Dmove() ")"}
+		| 	<JUMPTO> "(" ( <VAR> | <NUM> ) "," ( <VAR> | <NUM> )")"  {salida = "Command jumpto";}	//<JUMPTO>  "(" jumpto() ")"}
 		//		| 	<LOOK>  "(" look() ")"}
 		//		| 	<GRAB>  "(" grab() ")"}
 		//		| 	<FREE>  "(" free() ")"}
-		//		| 	<ISVALID>  "(" isvalid() ")"} 
-		//		| 	<CANMOVE>  "(" canmove() ")"}
 		//		| 	<VAR>  "(" llamadofun() ")"}     
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
@@ -299,7 +299,8 @@ TOKEN :
 
 	}
   
-/*
+	
+/*	
 	void step() :
 	{
 		int f=1;
