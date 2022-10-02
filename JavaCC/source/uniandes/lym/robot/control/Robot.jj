@@ -285,7 +285,7 @@ TOKEN :
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
 		) ";"
 		| controlstructure()
-		)
+		)+
 		"}"
 		)
 		)+
