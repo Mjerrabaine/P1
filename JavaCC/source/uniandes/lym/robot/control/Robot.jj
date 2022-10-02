@@ -192,6 +192,8 @@ TOKEN :
 		| 	<LOOK>  "(" (< NORTH > | < EAST > | < SOUTH > | < WEST >) ")" {salida = "Command Look";}
 		| 	<GRAB> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Grab";}
 		| 	<FREE> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Free";}
+		| 	<DROP> "(" (< NUM >|< VAR >) ")" {salida = "Command: Drop";}
+		| 	<GET> "(" (< NUM >|< VAR >) ")" {salida = "Command: Get";}  
 		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}   
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
@@ -274,7 +276,9 @@ TOKEN :
 		| 	<GRAB> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Grab";}
 		| 	<FREE> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Free";}
 		| 	<JUMP> "(" ( <VAR> | <NUM> )")"  {salida = "Command jump";}
-		| 	<VEER> "(" ( <LEFT> | <RIGHT> | <AROUND> )")"  {salida = "Command veer";}	
+		| 	<VEER> "(" ( <LEFT> | <RIGHT> | <AROUND> )")"  {salida = "Command veer";}
+		| 	<DROP> "(" (< NUM >|< VAR >) ")" {salida = "Command: Drop";}
+		| 	<GET> "(" (< NUM >|< VAR >) ")" {salida = "Command: Get";}  	
 		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}       
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
