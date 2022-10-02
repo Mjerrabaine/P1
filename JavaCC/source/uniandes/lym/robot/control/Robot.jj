@@ -147,7 +147,7 @@ TOKEN :
 	}
 
 
-		void controlstructure() :
+	void controlstructure() :
 	{
 			
 	}
@@ -157,8 +157,7 @@ TOKEN :
 	    condicional()
 	    | loop()
 	    | repeat()
-		)
-		//Se tiene que poner?    	
+		)   	
 	}
 
 	void loop() :
@@ -166,7 +165,7 @@ TOKEN :
 
 	}
 	{
-        < WHILE>  condiciones() < DO >  block() < OD >
+        <WHILE>  condiciones() < DO >  block() < OD >
 	}
 
 
@@ -195,7 +194,7 @@ TOKEN :
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
-		) ";"
+		)
 		"}"
 	}
 	
@@ -224,11 +223,10 @@ TOKEN :
 	{
 	    < INICORCH >
 	    (
-	    < ISFACING > (< NORTH >|< WEST >|< EAST >|< SOUTH >)
-	    //falta variable
-	    | < ISVALID > (< GRAB >|< STEP >|< JUMP >|< FREE >|< PICK >|< DROP >) ","  
-	    | < CANMOVE > (< NORTH >|< WEST >|< EAST >|< SOUTH >) ","
-	    | < NOT > condiciones()
+	    < ISFACING > < INICORCH > (< NORTH >|< WEST >|< EAST >|< SOUTH >) < ENDCORCH >
+	    | < ISVALID > < INICORCH > (< GRAB >|< STEP >|< JUMP >|< FREE >|< PICK >|< DROP >) < COMM > (< NUM >|< VAR>) < ENDCORCH >
+	    | < CANMOVE > < INICORCH > (< NORTH >|< WEST >|< EAST >|< SOUTH >) < COMM > (< NUM >|< VAR>) < ENDCORCH >
+	    | < NOT > < INICORCH > condiciones() < ENDCORCH >
 	    )
 	    < ENDCORCH  >
 	}
@@ -250,12 +248,15 @@ TOKEN :
 		  listvar()
 		  (
 		    
+		  (
+		    
 		  < PROC > < VAR > {l=token.image; listaprog.add(l);}
 			< INICORCH >  < VAR >{m=token.image; listavar.add(m);}
 			< COMM >  < VAR > {j=token.image; listavar.add(j);}
 			< ENDCORCH >
 		 	"{"
-		 	  
+		 	(
+		 	    
 		  (
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
@@ -275,8 +276,12 @@ TOKEN :
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
 		) ";"
+		| controlstructure()
+		)
 		"}"
+		)
 		)+
+
 		<GORP>
 
 		{
