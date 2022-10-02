@@ -194,7 +194,7 @@ TOKEN :
 		| 	<FREE> 	"(" (< NUM >|< VAR >) ")" {salida = "Command: Free";}
 		| 	<DROP> "(" (< NUM >|< VAR >) ")" {salida = "Command: Drop";}
 		| 	<GET> "(" (< NUM >|< VAR >) ")" {salida = "Command: Get";}  
-		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}   
+		| 	<VAR> ((< ARROW > < NUM >)|("(" < NUM > "," < NUM > ")")) {salida = "Command: asignacion";} 
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 		| 	<JUMP> "(" ( <VAR> | <NUM> )")"  {salida = "Command jump";}
@@ -255,11 +255,14 @@ TOKEN :
 		  (
 		    
 		  (
-		    
+		   (
+		      
 		  < PROC > < VAR > {l=token.image; listaprog.add(l);}
-			< INICORCH >  < VAR >{m=token.image; listavar.add(m);}
+			< INICORCH >  (< VAR >{m=token.image; listavar.add(m);}
 			< COMM >  < VAR > {j=token.image; listavar.add(j);}
+			)?
 			< ENDCORCH >
+			)?
 		 	"{"
 		 	(
 		 	    
@@ -279,11 +282,11 @@ TOKEN :
 		| 	<VEER> "(" ( <LEFT> | <RIGHT> | <AROUND> )")"  {salida = "Command veer";}
 		| 	<DROP> "(" (< NUM >|< VAR >) ")" {salida = "Command: Drop";}
 		| 	<GET> "(" (< NUM >|< VAR >) ")" {salida = "Command: Get";}  	
-		| 	<VAR> < ARROW > < NUM >//<VAR>  "(" llamadofun() ")"}       
+		| 	<VAR> ((< ARROW > < NUM >)|("(" < NUM > "," < NUM > ")")) {salida = "Command: asignacion";}       
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
-		) ";"
+		) (";")?
 		| controlstructure()
 		)+
 		"}"
