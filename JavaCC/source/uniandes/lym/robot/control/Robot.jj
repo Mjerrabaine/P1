@@ -134,7 +134,7 @@ TOKEN :
         
 }
 
-
+/*
 	boolean programa(Console sistema):
 	{
 	  salida = new String();
@@ -164,6 +164,7 @@ TOKEN :
 
     	| <EOF> {return false;}
   }
+
   
   	void defun() :
 {
@@ -204,15 +205,15 @@ TOKEN :
     	 {salida= "comando instruccion";}
 	}
 	
- 
+ */
 	void listvar() :
 	{
 		String salida, x;	
 	}
 	{
  	
-	  	  < VARIABLE>  (<VAR> <COMM>)* 
-	  	  |(< VAR> ) ";" {x=token.image; listavar.add(x);salida= "comando lista variables";}
+	  	  < VARIABLE>  ((<VAR> <COMM>) 
+	  	  (<VAR>))+ ";" {x=token.image; listavar.add(x);salida= "comando lista variables";}
 
 	}
 
@@ -312,14 +313,24 @@ TOKEN :
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
 	{
-	  salida = new String();	
+	  salida = new String();
+	  String l,m,j;	
 		
 		int x,y;	
 	}
 
 	
 	{
+		
 		(
+		  <PROG>
+		  listvar()
+		  
+		  < PROC > < VAR > {l=token.image; listaprog.add(l);}
+			< INICORCH >  < VAR >{m=token.image; listavar.add(m);}
+			< COMM >  < VAR > {j=token.image; listavar.add(j);}
+			< ENDCORCH >
+		 	"{"
 		  (
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
 		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
@@ -338,7 +349,12 @@ TOKEN :
 		|  <PUT> "("  put() ")"
 		|  <PICK> "(" get()  ")"
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
-		) ";" 
+		) ";"
+
+		"}"
+		
+		<GORP>
+
 		{
 		    try {
 	    			 Thread.sleep(900);
